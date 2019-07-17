@@ -1,6 +1,6 @@
 # Common Rendering and JS
 
-Now we are ready to update our Kotlin/JS code to provide 
+We are now ready to update our Kotlin/JS code and provide 
 `actual` declarations for all the `expect` declarations from the `commonMain`. 
 We will be using the [HTML Canvas](https://www.w3schools.com/html/html5_canvas.asp)
 on the client-side to render the images.
@@ -9,7 +9,7 @@ on the client-side to render the images.
 
 The actual `Color` class for the client-side can be implemented from scratch.
 Let's create a `colour-actual.kt` file in the `src/jsMain/kotlin` folder
-with the following contents:
+with the following contents in it:
 
 ```kotlin
 actual class Color(
@@ -21,15 +21,15 @@ actual fun Colors.newColor(r: Int, g: Int, b: Int) = Color(r, g, b)
 actual val Colors.BLACK: Color get() = Color(0, 0, 0)
 ```
 
-We've also added the `actual` declarations for the `Colors.BLACK` property
+We've added the `actual` declarations for the `Colors.BLACK` property
 and for the `Colors.newColor` function.
-That should be enough to fix the compilation of the `jsMain` source set. Now it is
-time to support rendering to HTML Canvas
+This should be enough to fix the compilation of the `jsMain` source set. Now it is
+time to support rendering to the HTML Canvas.
 
 ## Adding Canvas Support
 
 Let's add the implementation code to render images into the HTML Canvas. We'll need
-to create the `src/jsMain/kotlin/canvas.kt` file with the following contents
+to create a `src/jsMain/kotlin/canvas.kt` file with the following contents
 ```kotlin
 fun renderToCanvas(canvas : HTMLCanvasElement, action: (FractalImage) -> Unit) {
   val ctx = canvas.getContext("2d") as CanvasRenderingContext2D
@@ -61,8 +61,8 @@ fun renderToCanvas(canvas : HTMLCanvasElement, action: (FractalImage) -> Unit) {
 
 ## Using the Canvas
 
-The very last step is to call the rendering code from the `main.kt` file. 
-Let's add a few more lines to the `src/jsMain/kotlin/main.kt` file so that 
+The final step is to call the rendering code from the `main.kt` file. 
+Let's add a few lines to the `src/jsMain/kotlin/main.kt` file, so 
 the `main()` function adds a canvas element after the `img()` function call:
 ```kotlin
 img//(...)
@@ -73,7 +73,7 @@ canvas {
 }
 ```
 
-We also add the call to the rendering code at the end of the `main()` function:
+We also add a call to render the code at the end of the `main()` function:
 
 ```kotlin
 renderToCanvas(document.getElementById("canvas") as HTMLCanvasElement) { image ->
@@ -83,7 +83,7 @@ renderToCanvas(document.getElementById("canvas") as HTMLCanvasElement) { image -
 
 ## Running the client-side App
 
-It is now time to run the Gradle `run` task to start the server-side Kotlin/JVM project, and the
+It's now time to run the Gradle `run` task to start the server-side Kotlin/JVM project and the
 `jsRun` task to start the client-side Kotlin/JS application. We should be
 able to see two images – the one that is rendered server-side with the Kotlin/JVM, and a second
 that is rendered directly in the browser with Kotlin/JS:
@@ -93,10 +93,10 @@ that is rendered directly in the browser with Kotlin/JS:
 
 ## Completed Code
 
-We may use the `step-006` branch of the
+We can use the `step-006` branch of the
 [github.com/kotlin-hands-on/intro-mpp](https://github.com/kotlin-hands-on/intro-mpp)
-repository as the solution of the tasks that we done above. 
-We may also just download the
+repository for the solution to the tasks we did above. 
+We can also download the
 [archive](https://github.com/kotlin-hands-on/intro-mpp/archive/step-006.zip)
 from GitHub directly.
    
